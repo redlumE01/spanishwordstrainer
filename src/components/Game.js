@@ -105,11 +105,7 @@ class Game extends React.Component{
     renderSwitch(param) {
         switch(param) {
             case 'right':
-
-                const runTimeOut =() => {
-                    setTimeout(this.gameContinue, 3000);
-                };
-
+                const runTimeOut =() => {setTimeout(this.gameContinue, 3000)};
                  return (
                     <div>
                         {runTimeOut()}
