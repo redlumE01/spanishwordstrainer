@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class Login extends React.Component{
 
@@ -10,10 +11,11 @@ class Login extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.formHandler = this.formHandler.bind(this);
+        this.createLocalStorage = this.createLocalStorage.bind(this);
+
     }
 
     handleInputChange(event) {
-        // object destructuring
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -23,18 +25,23 @@ class Login extends React.Component{
         });
     }
 
+    createLocalStorage() {
+        localStorage.setItem("user", this.state.username);
+        localStorage.setItem("userHighScore", 0);
+    }
+
     formHandler(event) {
         event.preventDefault();
-        console.log(this.state);
+        document.querySelector('form a').click();
     }
 
     render(){
         return(
             <div>
                 <p>Hallo, wat is je naam?</p>
-                <form onSubmit={this.formHandler}>
+                <form onSubmit={this.formHandler} autoComplete="off">
                     <input name="username" type="input" value={this.state.username} onChange={this.handleInputChange} /><br/>
-                    <button>Start</button>
+                    <Link to={{pathname: "/game", state: { username: this.state.username }}} onClick={this.createLocalStorage}>klik</Link>
                 </form>
             </div>
         )

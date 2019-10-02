@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header';
 
 class Game extends React.Component{
 
@@ -13,7 +14,8 @@ class Game extends React.Component{
             },
             userInputAnswer: '',
             userPoints: 0,
-            gameState: 'default'
+            gameState: 'default',
+            celebratorMode : false
         };
 
         this.gameStart = this.gameStart.bind(this);
@@ -37,7 +39,14 @@ class Game extends React.Component{
 
                 this.gameStart();
 
-            });
+        });
+
+        // Fill localstorage data
+
+        if (!localStorage.user){
+            localStorage.setItem("user", "gast_" + Math.floor(Math.random() * 999));
+            localStorage.setItem("userHighScore", 0);
+        }
     }
 
     gameStart(){
@@ -92,6 +101,10 @@ class Game extends React.Component{
             });
         }else{
             this.setState({gameState : 'wrong'});
+            if (this.state.userPoints > localStorage.getItem('userHighScore')){
+                localStorage.setItem("userHighScore", this.state.userPoints);
+                this.setState({celebratorMode : true});
+            }
         }
     }
 
@@ -108,23 +121,33 @@ class Game extends React.Component{
                 const runTimeOut =() => {setTimeout(this.gameContinue, 3000)};
                  return (
                     <div>
+                        <Header score={this.state.userPoints}/>
+                        <h1>Dat is het juiste antwoord</h1>
                         {runTimeOut()}
-                        <h1>OOWWW!! JAAA  WIJNEN WIJNEN</h1>
-                        <iframe title="funny" src="https://giphy.com/embed/fVnMLhKljkVGlAim8t" width="180" height="180" frameBorder="0" className="giphy-embed" allowFullScreen></iframe><br/>
                      </div>
                 );
             case 'wrong':
+
+                const isCeleBration = this.state.celebratorMode;
+                let celebrationMode;
+
+                if (isCeleBration) {
+                    celebrationMode = <h2>GEFELICITEERD!! je hebt een nieuwe highscore:<br/>{this.state.userPoints}</h2>;
+                }
+
                 return (
                     <div>
-                        <h2>NEEE--heee dat is  FOUHOOOUTT!!</h2>
-                        <iframe title="wrong" src="https://giphy.com/embed/h6ZKeVAcN8fTe2Axdr" width="240" height="240" frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
+                        <Header score={this.state.userPoints}/>
+                        <h2>Helaas dat is niet het juiste antwoord</h2>
                         <p>Het juiste antwoord was: {this.state.wordObject.answer} </p>
+                        {celebrationMode}
                         <button onClick={this.gameReset}>restart game</button>
                     </div>
                 );
             default:
                 return (
                     <div>
+                        <Header score={this.state.userPoints}/>
                         <form onSubmit={this.checkAnswer} autoComplete="off">
                             <h2>{this.state.wordObject.question}</h2>
                             <input name="userInputAnswer" type="input" value={this.state.userInputAnswer} onChange={this.handleInputChange}/>
@@ -139,7 +162,6 @@ class Game extends React.Component{
     render() {
         return (
             <div>
-                <header>jouw score: {this.state.userPoints}</header>
                 {this.renderSwitch(this.state.gameState)}
             </div>
         );
