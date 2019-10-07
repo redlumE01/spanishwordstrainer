@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { ReactComponent as Logo } from '../img/logo.svg';
 
 class Login extends React.Component{
 
@@ -38,11 +39,20 @@ class Login extends React.Component{
     render(){
         return(
             <div>
-                <p>Hallo, wat is je naam?</p>
-                <form onSubmit={this.formHandler} autoComplete="off">
-                    <input name="username" type="input" value={this.state.username} onChange={this.handleInputChange} /><br/>
-                    <Link to={{pathname: "/game", state: { username: this.state.username }}} onClick={this.createLocalStorage}>klik</Link>
-                </form>
+                <header className='content'>
+                    <Logo />
+                </header>
+                <main className='content'>
+                    <h1>Spaanse woorden oefenen</h1>
+                    <p>
+                        Sed semper massa eu nibh pulvinar<br/> Nam sollicitudin non est vel dignissim. Quisque non felis et odio interdum consectetur.
+                    </p>
+                    <form onSubmit={this.formHandler} autoComplete="off">
+                        <input name="username" type="input" value={this.state.username} onChange={this.handleInputChange} /><br/>
+                        <Link className='btn' to={{pathname: "/game", state: { username: this.state.username }}} onClick={this.createLocalStorage}>start</Link>
+                    </form>
+                </main>
+                <footer></footer>
             </div>
         )
     }

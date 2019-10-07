@@ -40,7 +40,15 @@ table {
   border-spacing: 0;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Darker+Grotesque:300,500&display=swap');
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Darker+Grotesque:300,500&display=swap');
 
 body {
   background-color:#2d607d;
@@ -59,8 +67,11 @@ body, input {
 }
 
 p {
-  line-height: 24px;
   margin-bottom:0.5em;
+}
+
+a {
+  text-decoration: none;
 }
 
 h2 {
@@ -79,4 +90,26 @@ input {
 
 input:focus {
   outline-color: #28556f;
+}
+
+.btn {
+  background-color: #FFF;
+  margin:0.5em 0;
+  display:inline-block;
+  color: #2d607d;
+  padding:0.4em;
+  font-weight: 500;
+}
+
+.logo path {
+  fill:#FFF;
+}
+
+.content {
+  display: block;
+  max-width:480px;
+  width:100%;
+  margin:0 auto;
+  padding:0 1em;
+  text-align: center;
 }
