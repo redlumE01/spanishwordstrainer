@@ -29,5 +29,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/spanishwordtrainer/"
+  "homepage": "/spanishwordtrainer/",
+  "devDependencies": {
+    "node-sass": "^4.12.0"
+  }
 }

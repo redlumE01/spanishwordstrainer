@@ -49,10 +49,11 @@ html {
 }
 
 @import url('https://fonts.googleapis.com/css?family=Pacifico|Darker+Grotesque:300,500&display=swap');
+@import "./vars.scss";
 
 body {
-  background-color:#2d607d;
-  color:#FFF;
+  background-color:$primaryColor;
+  color:$secondaryColor;
 }
 
 body, input {
@@ -93,16 +94,16 @@ input:focus {
 }
 
 .btn {
-  background-color: #FFF;
+  background-color: $secondaryColor;
   margin:0.5em 0;
   display:inline-block;
-  color: #2d607d;
+  color: $primaryColor;
   padding:0.4em;
   font-weight: 500;
 }
 
 .logo path {
-  fill:#FFF;
+  fill:$secondaryColor;
 }
 
 .content {

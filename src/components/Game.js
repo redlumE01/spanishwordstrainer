@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import '../game.css';
+import '../game.scss';
 
 class Game extends React.Component{
 
