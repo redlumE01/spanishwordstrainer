@@ -29,6 +29,7 @@ class Login extends React.Component{
     createLocalStorage() {
         localStorage.setItem("user", this.state.username);
         localStorage.setItem("userHighScore", 0);
+        localStorage.setItem("playTimedGame", false);
     }
 
     formHandler(event) {
@@ -38,14 +39,14 @@ class Login extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className='login'>
                 <header className='content'>
                     <Logo />
                 </header>
                 <main className='content'>
-                    <h1>Spaanse woorden oefenen</h1>
                     <p>
-                        Sed semper massa eu nibh pulvinar<br/> Nam sollicitudin non est vel dignissim. Quisque non felis et odio interdum consectetur.
+                        Met ¡Hola y Hallo! is het gemakkelijk om je Spaanse vocabulaire op peil houden.
+                        <br/> Start het spel door hieronder je naam in te vullen.
                     </p>
                     <form onSubmit={this.formHandler} autoComplete="off">
                         <input name="username" type="input" value={this.state.username} onChange={this.handleInputChange} /><br/>

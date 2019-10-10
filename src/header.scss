@@ -1,6 +1,29 @@
-
+@import "./vars.scss";
 
 .gameHeader{
-  background-color:#28556f;
-  padding:1em;
+  padding:16px;
+  display: flex;
+  justify-content: space-between;
+  justify-items: center;
+  margin-bottom: 16px;
+
+  .logo {
+    width:80px;
+    height:auto;
+    margin:0;
+  }
+
+  div {
+
+    display: flex;
+    align-items: center;
+
+    .icon {
+      margin-left:1em;
+      height: 30px;
+      width: 30px;
+    }
+
+  }
+
 }

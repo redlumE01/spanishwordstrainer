@@ -1,0 +1,103 @@
+@import "./vars.scss";
+
+.highScore {
+  display: flex;
+  justify-content: center;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    position: relative;
+    width: 26px;
+    margin-right:10px;
+  }
+
+  span {
+    font-weight:500;
+  }
+
+}
+
+.userCredentials {
+  form {
+
+    label, input {
+      margin-bottom:1em;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      span {
+        display:inline-block;
+        margin-right:8px;
+      }
+
+      .checkmark {
+        position: relative;
+        height: 25px;
+        width: 25px;
+        background-color: $secondaryColor;
+
+        &:after {
+          content: "";
+          position: absolute;
+          display: none;
+
+          left:11px;
+          top:6px;
+          width: 5px;
+          height: 10px;
+
+          border: solid white;
+          border-width: 0 3px 3px 0;
+          -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+
+        }
+
+      }
+
+      &:hover input ~ .checkmark {
+        background-color: #ccc;
+      }
+
+      input:checked ~ .checkmark {
+        background-color: darken($primaryColor, 8);
+
+        &:after {
+          display: block;
+        }
+
+      }
+
+    }
+
+  }
+}
+

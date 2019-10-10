@@ -1,44 +1,5 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-body {
-  line-height: 1;
-}
-
-blockquote, q {
-  quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+@import "./normalize.scss";
+@import "./vars.scss";
 
 html {
   box-sizing: border-box;
@@ -48,36 +9,50 @@ html {
   box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Pacifico|Darker+Grotesque:300,500&display=swap');
-@import "./vars.scss";
-
-body {
-  background-color:$primaryColor;
-  color:$secondaryColor;
+:focus {
+  outline: 0;
 }
 
-body, input {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-  sans-serif;
-  font-family: 'Darker Grotesque', sans-serif;
+body {
+  color:$secondaryColor;
+  line-height: normal;
+}
+
+body, input, button {
+  font-family: 'Libre Franklin', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size:24px;
-  font-weight: 300;
+  font-size:16px;
+  font-weight:100;
+  line-height:22px;
+}
+
+.login {
+  padding-top:5vh;
+}
+
+input, select, textarea, button {
+  border:none;
+  background-image:none;
+  background-color:transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  @include rounded-borders;
 }
 
 p {
-  margin-bottom:0.5em;
+  margin-bottom:1em;
 }
 
 a {
   text-decoration: none;
 }
 
-h2 {
-  margin:1em 0;
-  font-weight: 500;
+h1,h2 {
+  margin:0.2em 0;
+  font-weight:500;
+  line-height:40px;
 }
 
 strong {
@@ -85,25 +60,14 @@ strong {
 }
 
 input {
+  background-color:$secondaryColor;
   border:none;
-  padding:0.2em;
+  padding:0.6em;
+  margin-bottom:16px;
 }
 
 input:focus {
-  outline-color: #28556f;
-}
-
-.btn {
-  background-color: $secondaryColor;
-  margin:0.5em 0;
-  display:inline-block;
-  color: $primaryColor;
-  padding:0.4em;
-  font-weight: 500;
-}
-
-.logo path {
-  fill:$secondaryColor;
+  outline-color: $primaryColor;
 }
 
 .content {
@@ -113,4 +77,136 @@ input:focus {
   margin:0 auto;
   padding:0 1em;
   text-align: center;
+}
+
+.btn {
+  @include rounded-borders;
+  @include animated;
+  background-color:$secondaryColor;
+  color: $primaryColor;
+  margin-bottom:16px;
+  cursor:pointer;
+  display:inline-block;
+  padding:0.6em;
+  font-weight:500;
+
+  &:hover {
+    background-color:darken($primaryColor,6);
+    color: $secondaryColor;
+  }
+
+}
+
+.logo {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-name: bounceIn;
+  animation-name: bounceIn;
+  margin-bottom: 2vh;
+
+  & path {
+    fill:$secondaryColor;
+  }
+
+}
+
+
+/*!
+ * animate.css -https://daneden.github.io/animate.css/
+ * Version - 3.7.2
+ * Licensed under the MIT license - http://opensource.org/licenses/MIT
+ *
+ * Copyright (c) 2019 Daniel Eden
+ */
+
+
+
+@-webkit-keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: scale3d(0.3, 0.3, 0.3);
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    -webkit-transform: scale3d(1.1, 1.1, 1.1);
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    -webkit-transform: scale3d(0.9, 0.9, 0.9);
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    -webkit-transform: scale3d(1.03, 1.03, 1.03);
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    -webkit-transform: scale3d(0.97, 0.97, 0.97);
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
 }
