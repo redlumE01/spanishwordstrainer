@@ -4,10 +4,7 @@
 
 $primaryColor: #2d607d;
 $secondaryColor: #FFF;
-//$dangerColor: #751500;
 $dangerColor: #7d2d38;
-
-// $successColor: #5f7044;
 $successColor:#607d2d;
 
 $iconSize: 80px;
@@ -24,4 +21,13 @@ $iconSize: 80px;
   transition: all 0.4s ease;
 }
 
+// animations
 
+@keyframes fadeIn{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}

@@ -16,13 +16,14 @@ html {
 body {
   color:$secondaryColor;
   line-height: normal;
+  overflow: hidden;
 }
 
 body, input, button {
   font-family: 'Libre Franklin', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size:16px;
+  font-size:14px;
   font-weight:100;
   line-height:22px;
 }
@@ -77,6 +78,8 @@ input:focus {
   margin:0 auto;
   padding:0 1em;
   text-align: center;
+  z-index: 1;
+  position: relative;
 }
 
 .btn {
@@ -109,7 +112,6 @@ input:focus {
   }
 
 }
-
 
 /*!
  * animate.css -https://daneden.github.io/animate.css/

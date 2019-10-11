@@ -1,9 +1,13 @@
 import React from 'react';
+import ConfettiGenerator from "confetti-js";
 import Header from './Header';
 import '../game.scss';
+
 import { ReactComponent as Loadertime } from '../img/timer_load.svg';
 import { ReactComponent as Smileysad } from '../img/sad.svg';
 import { ReactComponent as Smileysmile } from '../img/smile.svg';
+import { ReactComponent as Keyboard } from '../img/keyboard.svg';
+import { ReactComponent as Stopwatch } from '../img/stopwatch.svg';
 
 class Game extends React.Component{
 
@@ -32,6 +36,8 @@ class Game extends React.Component{
 
         this.checkAnswer = this.checkAnswer.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInsertChange = this.handleInsertChange.bind(this);
+        this.toggleSc = this.toggleSc.bind(this);
 
     }
 
@@ -60,7 +66,10 @@ class Game extends React.Component{
             localStorage.setItem("userHighScore", 0);
             localStorage.setItem("playTimedGame", false);
         }
+
     }
+
+    // Set focus on input field
 
     focusInput = (component) => {
         if (component) {
@@ -76,6 +85,7 @@ class Game extends React.Component{
         // Clear user input
         if (this.state.userInputAnswer){this.setState({userInputAnswer : ''})}
 
+        // Randomize wordObject
         if (Math.floor(Math.random() * 2) > 0){
             this.setState({
                 wordObject : {
@@ -170,10 +180,38 @@ class Game extends React.Component{
     }
 
     handleInputChange(event) {
+
         const target = event.target;
         const value = target.value;
         const name = target.name;
         this.setState({[name]: value});
+
+    }
+
+    handleInsertChange(event){
+        event.preventDefault();
+        const insert = this.state.userInputAnswer + event.target.innerHTML;
+        this.setState({userInputAnswer: insert});
+
+        // Reset focus on input field
+        document.querySelector('input').focus();
+
+    }
+
+    // Toggle Special Characters
+
+     toggleSc(event){
+        event.preventDefault();
+        const element = event.target;
+
+        document.querySelector('.specialCharacters').classList.toggle("active");
+
+        let elementInnerHTML = event.target.innerHTML,
+            newInnerHTML = '';
+
+        elementInnerHTML.substring(0, 2) === "Ac" ? newInnerHTML = elementInnerHTML.replace("Ac", "Deac") : newInnerHTML = elementInnerHTML.replace("Deac", "Ac");
+        element.innerHTML = newInnerHTML;
+
     }
 
     renderSwitch(param) {
@@ -183,36 +221,40 @@ class Game extends React.Component{
         const isCelebration = this.state.celebratorMode;
         let celebrationMode;
 
+
         if (isCelebration === true) {
-            celebrationMode = <div><h2>Gefeliciteerd!</h2>Je hebt een nieuwe highscore:<br/><strong>{this.state.userPoints}</strong></div>;
+            celebrationMode = <div className="celebration"><h2>Gefeliciteerd!</h2><p>Je hebt een nieuwe highscore:<span><strong>{this.state.userPoints}</strong></span></p></div>;
+            let confetti = new ConfettiGenerator({ target: 'confetti' });
+            confetti.render();
         }
 
         switch(param) {
 
             case 'right':
-                const runTimeOut = () => {setTimeout(this.gameContinue, 2000)};
+                const runTimeOut = () => {setTimeout(this.gameContinue, 2500)};
+
                  return (
                     <div className={param}>
                         <Header score={this.state.userPoints}/>
-                        <main className='content'>
+                        <main className="content">
                             <Smileysmile />
-                            <h2>Dat is het juiste antwoord</h2>
+                            <h2>Geweldig!</h2>
+                            <h3>{this.state.userInputAnswer} is het juiste antwoord.</h3>
                         </main>
                         {runTimeOut()}
                      </div>
                 );
 
             case 'wrong':
-
                 return (
                     <div className={param}>
                         <Header score={this.state.userPoints}/>
-                        <main className='content'>
+                        <main className="content">
                             <Smileysad />
                             <h2>Helaas is dat niet het juiste antwoord</h2>
                             <p>Het juiste antwoord was: <br/> <strong>{this.state.wordObject.answer}</strong></p>
                             {celebrationMode}
-                            <button onClick={this.gameReset} className='btn'>restart game</button>
+                            <button onClick={this.gameReset} className='btn'>herstart</button>
                         </main>
                     </div>
                 );
@@ -222,21 +264,29 @@ class Game extends React.Component{
                 return (
                     <div className={param}>
                         <Header score={this.state.userPoints}/>
-                        <main className='content'>
-                            <h2>Helaas dat is niet het juiste antwoord</h2>
-                            <p>Het juiste antwoord was: {this.state.wordObject.answer} </p>
+                        <main className="content">
+                            <Stopwatch/>
+                            <h2>Helaas, je gaf te laat antwoord.</h2>
+                            <p>Het juiste antwoord hadden moeten zijn: <br/> <strong>{this.state.wordObject.answer}</strong></p>
                             {celebrationMode}
-                            <button onClick={this.gameReset} className='btn'>restart game</button>
+                            <button onClick={this.gameReset} className='btn'>herstart</button>
                         </main>
                     </div>
                 );
 
             default:
                 const cssTimerStyle = 'timer-' + this.state.gameTime;
+                const specialCharacters = ["á","é","í","ó","ú","ñ"];
+
+                // Special Characters
+                const sCharacters = specialCharacters.map((item, key) =>
+                    <a href="/" key={item} onClick={this.handleInsertChange} >{item}</a>
+                );
+
                 return (
                     <div className={param}>
                         <Header score={this.state.userPoints}/>
-                        <main className='content'>
+                        <main className="content">
 
                             <div className='timer'>
                                 { this.state.gameTime === ''
@@ -248,9 +298,13 @@ class Game extends React.Component{
                             <form onSubmit={this.checkAnswer} autoComplete="off">
                                 <h2>{this.state.wordObject.question}</h2>
                                 <input ref={this.focusInput} name="userInputAnswer" type="input" value={this.state.userInputAnswer} onChange={this.handleInputChange}/>
-                                <br/>
+                                <div className='scHolder'>
+                                    <a href='/' onClick={this.toggleSc}><Keyboard /><span>Activeer speciale tekens</span></a>
+                                    <span className='specialCharacters'>{sCharacters}</span>
+                                </div>
                                 <button className='btn'>controleer</button>
                             </form>
+
                         </main>
                     </div>
                 );
@@ -258,8 +312,10 @@ class Game extends React.Component{
     }
 
     render() {
+
         return (
             <div>
+                <canvas id="confetti" className={this.state.gameState + " " + this.state.celebratorMode.toString()}></canvas>
                 {this.renderSwitch(this.state.gameState)}
             </div>
         );
